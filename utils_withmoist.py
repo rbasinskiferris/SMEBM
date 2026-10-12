@@ -160,29 +160,6 @@ def noise_mat_white(i,num_time,cw,noise):
     return noise_mat
 
 
-def noise_mat_white_one(i,num_time, cw, noise):
-    np.random.seed(i)
-
-    
-    n = np.size(cw)
-    # Generate all random numbers in one block: (latitudes, time)
-    random_samples = np.random.randn(n, num_time)
-    
-    # Use broadcasting to scale every latitude by its specific sigma and cw
-    # This treats the entire spatial domain as one vectorized process
-    noise_mat = (noise / cw)[:, np.newaxis] * random_samples
-    
-    return noise_mat
-
-def noise_mat_white_one_update(i, num_time, cw, noise):
-    """Perfectly correlated white noise: one random draw per timestep, shared by
-    every latitude, scaled by noise/cw at each latitude. Returns (nlat, num_time)."""
-    np.random.seed(i)
-    scale = np.atleast_1d(np.asarray(noise, dtype=float) / np.asarray(cw, dtype=float))
-    random_samples = np.random.randn(1, num_time)       # one draw per timestep
-    return scale[:, np.newaxis] * random_samples
-
-
 def itoEuler_withnoisemat_explicit(f, noise_mat, y0, tspan,dx=1):
     #modified from code in sdeint package
     d = np.size(y0)  # Dimension of the initial state

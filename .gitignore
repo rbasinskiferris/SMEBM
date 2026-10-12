@@ -5,3 +5,6 @@ readme_notpushed.txt
 *.pdf
 *.png
 test_dx.ipynb
+__pycache__/
+.ipynb_checkpoints/
+
