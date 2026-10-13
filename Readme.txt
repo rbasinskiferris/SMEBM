@@ -9,8 +9,8 @@ Figure 2: Plot made in plot_feedbackparameters_and_heatcap.ipynb. Variability fe
 Figure 3: Plot made in make_plots.ipynb with output from run_main_smebm_experiment.py which uses functions in utils_withmoist.py
 
 Most supplementary figures (S1-S10) for v1 of the paper are also plotted in the above files:
-variability_LE_forpaper.ipynb: S1, S2, S6
-plot_feedbackparameters_and_heatcap.ipynb: S3, S8, S10 
-make_plots.ipynb: S4, S5, S7
+variability_LE_forpaper.ipynb: S1, S2
+plot_feedbackparameters_and_heatcap.ipynb: S3, S5, S7, S9 
+make_plots.ipynb: S4, S6
 
-But, note that the underlying .py for creating output to plot S4, S5, S7, S10 still need to be added to the repo. Should also add code for making S9.
+But, note that the underlying .py for creating output to plot S4, S6, S9 still need to be added to the repo. Should also add code for making S8.

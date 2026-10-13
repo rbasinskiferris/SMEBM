@@ -7,7 +7,7 @@ from numba import jit
 def odefunc_ebm_total_lat_firstordertaylor(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_on=0,F=0,drop=0.2,relhum=0,eps=0,psfc=0,e0=0,a=0,b=0,L=0,cp=0,T_init=1): 
     
     #optionally can be moist or dry
-    #model writen in latitude space and used for latitude from -90 to 90
+    #model writen in latitude space and used for latitude from -90 to 90 (those should be boundary points for the boundary conditions as written)
     r=1 # r=1 consistent with https://www.gfdl.noaa.gov/blog_held/40-playing-with-a-diffusive-energy-balance-model/ and https://npg.copernicus.org/articles/32/23/2025/
     #This function can solve either the dry or moist ebm. it defaults to a dry ebm if relhum is 0.
     # Only works for both hemispheres
@@ -77,7 +77,7 @@ def dh_func(T): #note this has a times cp that we dont use when we use h in diff
 def odefunc_ebm_total_lat_variableD_plusterm_v4(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_on=0,F=0,drop=0.2,relhum=0,eps=0,psfc=0,e0=0,a=0,b=0,L=0,cp=0,T_init=1,dhdT=1,last_term=0,include_b=0): 
     Bval=B
     #optionally can be moist or dry
-    #model writen in latitude space!
+    #model writen in latitude space and used for latitude from -90 to 90 (those should be boundary points for the boundary conditions as written)
     r=1 # r=1 consistent with https://www.gfdl.noaa.gov/blog_held/40-playing-with-a-diffusive-energy-balance-model/ and https://npg.copernicus.org/articles/32/23/2025/
     #This function can solve either the dry or moist ebm. it defaults to a dry ebm if relhum is 0.
     # Only works for both hemispheres
