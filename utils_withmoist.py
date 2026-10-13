@@ -72,11 +72,9 @@ def dh_func(T): #note this has a times cp that we dont use when we use h in diff
     return theta_e
 
 
-# ########## NEED THIS ONE TO CHECK FOR THE TAYLOR EXPANSION STUFF
-
+# ########## NEED THIS ONE TO CHECK FOR THE TAYLOR EXPANSION STUF
 @jit
-#may 28 2026
-def odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_on=0,F=0,drop=0.2,relhum=0,eps=0,psfc=0,e0=0,a=0,b=0,L=0,cp=0,T_init=1,dhdT=1,last_term=0,include_b=0): 
+def odefunc_ebm_total_lat_variableD_plusterm_v4(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_on=0,F=0,drop=0.2,relhum=0,eps=0,psfc=0,e0=0,a=0,b=0,L=0,cp=0,T_init=1,dhdT=1,last_term=0,include_b=0): 
     Bval=B
     #optionally can be moist or dry
     #model writen in latitude space!
@@ -101,12 +99,7 @@ def odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_o
     Tdot[0] = 4*D*dhdT[0]*(T[1]-T[0])/dx**2
     Tdot[-1] = -4*D*dhdT[-1]*(T[-1]-T[-2])/dx**2
     if np.size(dhdT)>1: #calculates term b or not
-        #dh = (dhdT[2:] - dhdT[:-2]) / (2*dx)
-        #dT = (T[2:] - T[:-2]) / (2*dx)
         graddot = np.zeros_like(dhdT)
-        #graddot[1:-1] = (dh * dT) / (r**2)
-        #graddot[0]=2*(T[1]-T[0])*(dhdT[1]-dhdT[0])/dx**2
-        #graddot[-1]=-2*(T[-1]-T[-2])*(dhdT[-1]-dhdT[-2])/dx**2
         for i in range(1,n-1):
             grad_h_plus = (dhdT[i+1] - dhdT[i]) / dx
             grad_T_plus = (T[i+1] - T[i]) / dx
@@ -114,8 +107,8 @@ def odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_o
             grad_T_minus = (T[i] - T[i-1]) / dx
     
             graddot[i] = 0.5 * (grad_h_plus * grad_T_plus + grad_h_minus * grad_T_minus)
-        graddot[0]=2*(T[1]-T[0])*(dhdT[1]-dhdT[0])/dx**2
-        graddot[-1]=-2*(T[-1]-T[-2])*(dhdT[-1]-dhdT[-2])/dx**2
+        graddot[0]=(T[1]-T[0])*(dhdT[1]-dhdT[0])/dx**2
+        graddot[-1]=(T[-1]-T[-2])*(dhdT[-1]-dhdT[-2])/dx**2
 
     if last_term>0: #this includes term c or not
         dhdTdot=np.zeros(x.shape)
@@ -136,8 +129,6 @@ def odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,B,D,dx,x,cw,ramp_o
     else:
         f = (Src +F-A - (Bval*T) + Tdot)/cw
     return f
-
-
 
 @jit
 def ramp(T,drop=0.2):

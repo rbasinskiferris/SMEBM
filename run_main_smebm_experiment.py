@@ -14,7 +14,7 @@ import sys
 
 from utils_withmoist import odefunc_ebm_total_lat_firstordertaylor as odefunc_ebm_total_lat
 from utils_withmoist import noise_mat_white
-from utils_withmoist import odefunc_ebm_total_lat_variableD_plusterm_v3
+from utils_withmoist import odefunc_ebm_total_lat_variableD_plusterm_v4
 from utils_withmoist import itoEuler_withnoisemat_explicit
 
 # #Model parameters
@@ -267,7 +267,7 @@ def run_term_a(target_profile,time_rcp,i):
     lam=lam1
     cw=cw_alltime[12*80:12*105,:].mean(axis=0)
     
-    odefunc_control=lambda T,t:odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,lam,D,dlat,lat,cw,ramp_on=ramp_control,F=0,drop=drop_set,relhum=0,eps=eps,psfc=psfc,e0=e0,a=a,b=b,L=L,cp=cp,T_init=target_profile,dhdT=dh_func(target_profile)/cp,last_term=0)
+    odefunc_control=lambda T,t:odefunc_ebm_total_lat_variableD_plusterm_v4(T,t,aw,ai,S,A,lam,D,dlat,lat,cw,ramp_on=ramp_control,F=0,drop=drop_set,relhum=0,eps=eps,psfc=psfc,e0=e0,a=a,b=b,L=L,cp=cp,T_init=target_profile,dhdT=dh_func(target_profile)/cp,last_term=0)
     
     
     dt=np.diff(time_rcp)[0]
@@ -294,7 +294,7 @@ def run_term_b(target_profile,time_rcp,i):
     lam=lam1
     cw=cw_alltime[12*80:12*105,:].mean(axis=0)
     
-    odefunc_control=lambda T,t:odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,lam,D,dlat,lat,cw,ramp_on=ramp_control,F=0,drop=drop_set,relhum=0,eps=eps,psfc=psfc,e0=e0,a=a,b=b,L=L,cp=cp,T_init=target_profile,dhdT=dh_func(target_profile)/cp,last_term=0,include_b=1)
+    odefunc_control=lambda T,t:odefunc_ebm_total_lat_variableD_plusterm_v4(T,t,aw,ai,S,A,lam,D,dlat,lat,cw,ramp_on=ramp_control,F=0,drop=drop_set,relhum=0,eps=eps,psfc=psfc,e0=e0,a=a,b=b,L=L,cp=cp,T_init=target_profile,dhdT=dh_func(target_profile)/cp,last_term=0,include_b=1)
     
     
     dt=np.diff(time_rcp)[0]
@@ -322,7 +322,7 @@ def run_term_c(target_profile,time_rcp,i):
     lam=lam1
     cw=cw_alltime[12*80:12*105,:].mean(axis=0)
     
-    odefunc_control=lambda T,t:odefunc_ebm_total_lat_variableD_plusterm_v3(T,t,aw,ai,S,A,lam,D,dlat,lat,cw,ramp_on=ramp_control,F=0,drop=drop_set,relhum=0,eps=eps,psfc=psfc,e0=e0,a=a,b=b,L=L,cp=cp,T_init=target_profile,dhdT=dh_func(target_profile)/cp,last_term=1)
+    odefunc_control=lambda T,t:odefunc_ebm_total_lat_variableD_plusterm_v4(T,t,aw,ai,S,A,lam,D,dlat,lat,cw,ramp_on=ramp_control,F=0,drop=drop_set,relhum=0,eps=eps,psfc=psfc,e0=e0,a=a,b=b,L=L,cp=cp,T_init=target_profile,dhdT=dh_func(target_profile)/cp,last_term=1)
     
     
     dt=np.diff(time_rcp)[0]
@@ -428,5 +428,5 @@ forced_breakdown=xr.concat([forced_sol_terma,forced_sol_termb,forced_sol_termc],
 control_breakdown=xr.concat([control_sol_terma,control_sol_termb,control_sol_termc],dim='term')
 
 
-control_breakdown.to_netcdf("/glade/derecho/scratch/aurorabf/EBM/moist/test_variance_scaling/tune_timestep_cesm1_variability_controldecomposition_cw8pt74_ratio65land600_ensemble_longrun_formultilevel_fixmay_notikhonov_sst_quarterdt.nc")
-forced_breakdown.to_netcdf("/glade/derecho/scratch/aurorabf/EBM/moist/test_variance_scaling/tune_timestep_cesm1_variability_forceddecomposition_cw8pt74_ratio65land600_ensemble_longrun_formultilevel_fixmay_notikhonov_sst_quarterdt.nc")
+control_breakdown.to_netcdf("/glade/derecho/scratch/aurorabf/EBM/moist/test_variance_scaling/tune_timestep_cesm1_variability_controldecomposition_cw8pt74_ratio65land600_ensemble_longrun_formultilevel_fixmay_notikhonov_sst_quarterdt_updatebdcondboct.nc")
+forced_breakdown.to_netcdf("/glade/derecho/scratch/aurorabf/EBM/moist/test_variance_scaling/tune_timestep_cesm1_variability_forceddecomposition_cw8pt74_ratio65land600_ensemble_longrun_formultilevel_fixmay_notikhonov_sst_quarterdt_updatebdcondboct.nc")
